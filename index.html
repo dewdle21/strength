@@ -1,0 +1,309 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Rayne &amp; Perry Lift</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one phone column. Person switch, day tabs, three slot cards, rules tucked below. Gym-signage type, chalk + safety orange. */
+:root{
+  --bg:#EDEFEA; --surface:#FBFBF8; --ink:#16201B; --muted:#5C6660; --line:#D5D9D2;
+  --accent:#D9480F; --accent-ink:#FFFFFF; --accent-soft:#FBE3D6; --good:#2F7A4F;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111613; --surface:#1A201C; --ink:#E9EDE8; --muted:#9AA49D; --line:#2C342F;
+  --accent:#FF6B2C; --accent-ink:#140A04; --accent-soft:#3A2015; --good:#5FBF86; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#1A201C; --ink:#E9EDE8; --muted:#9AA49D; --line:#2C342F;
+  --accent:#FF6B2C; --accent-ink:#140A04; --accent-soft:#3A2015; --good:#5FBF86; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--body);}
+.wrap{max-width:560px;margin:0 auto;padding-block:16px 48px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:.01em}
+h1{font-size:2rem;font-weight:800;text-transform:uppercase;line-height:1}
+.eyebrow{font:600 .75rem/1 var(--body);text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.who{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.who button{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;
+  font:800 1.5rem/1 var(--display);text-transform:uppercase}
+.who button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.days button{border:0;background:transparent;border-bottom:3px solid var(--line);padding:8px 4px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.days button b{font:700 1.15rem/1 var(--display);text-transform:uppercase}
+.days button small{font-size:.78rem;color:var(--muted)}
+.days button[aria-selected="true"]{border-color:var(--accent)}
+.days button .today{color:var(--accent);font-weight:600}
+
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;font:500 .8rem/1 var(--mono);padding:6px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.timer{border:2px solid var(--ink);background:var(--surface);border-radius:999px;padding:8px 14px;font:700 1rem/1 var(--display);text-transform:uppercase;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.timer.running{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+details.card>summary{list-style:none;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary h2{font-size:1.25rem;text-transform:uppercase}
+details.card>summary::after{content:"+";font:700 1.4rem/1 var(--display);color:var(--muted)}
+details.card[open]>summary::after{content:"\2212"}
+.cardbody{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.wu{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.wu li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.wu li:first-child{border-top:0}
+.wu .dose{color:var(--muted);font:500 .8rem/1.4 var(--mono);text-align:right;flex:none}
+a{color:var(--accent);font-weight:600}
+
+.slot{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.slot-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.letter{font:800 1rem/1 var(--display);background:var(--ink);color:var(--bg);border-radius:6px;padding:4px 8px;margin-right:8px}
+.slot-head .what{font:700 1rem/1 var(--display);text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.dose-big{font:500 .85rem/1 var(--mono);white-space:nowrap}
+.ex-name{font:700 1.6rem/1.1 var(--display);text-transform:uppercase}
+.load{font:500 .82rem/1.3 var(--mono);color:var(--accent)}
+.ladder{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.ladder span{height:8px;border-radius:2px;background:var(--line)}
+.ladder span.on{background:var(--accent)}
+.ladder-label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+.cues{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.note{font-size:.88rem;color:var(--muted);background:var(--accent-soft);border-radius:8px;padding:8px 10px;color:var(--ink)}
+.slot-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:transparent;border-radius:10px;padding:10px 12px;font-weight:600}
+.btn.up{background:var(--ink);color:var(--bg);border-color:var(--ink);flex:1}
+.btn:disabled{opacity:.4;cursor:default}
+.ex-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ex-name{min-width:0}
+.watch{flex:none;font-size:.85rem;text-decoration:none;border:1.5px solid var(--accent);border-radius:999px;padding:5px 10px;margin-top:2px;white-space:nowrap}
+.flash{animation:flash .6s ease}
+@keyframes flash{from{background:var(--accent-soft)}to{background:var(--surface)}}
+@media (prefers-reduced-motion:reduce){.flash{animation:none}}
+
+.rules ol,.rules ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.rules p{margin:0}
+.plates{width:100%;border-collapse:collapse;font:500 .82rem/1.3 var(--mono)}
+.plates td,.plates th{text-align:left;padding:6px 4px;border-top:1px solid var(--line)}
+.plates th{font:600 .72rem/1 var(--body);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-top:0}
+.foot{font-size:.8rem;color:var(--muted);text-align:center}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:6px">
+    <span class="eyebrow">3 × 20 minutes a week</span>
+    <h1>Home Strength</h1>
+  </header>
+
+  <div class="who" role="group" aria-label="Who's training">
+    <button id="who-rayne" data-p="rayne">Rayne</button>
+    <button id="who-perry" data-p="perry">Perry</button>
+  </div>
+
+  <div class="days" role="tablist" id="days"></div>
+
+  <div class="bar">
+    <button class="timer" id="timer" aria-live="polite">Rest 90 sec</button>
+    <span class="chip">A: 3 sets</span><span class="chip">B, C: 2–3 sets</span>
+  </div>
+
+  <details class="card" id="warmup">
+    <summary><h2>Warm-up · 3 min</h2></summary>
+    <div class="cardbody"><ul class="wu" id="wu-list"></ul></div>
+  </details>
+
+  <div id="slots" style="display:flex;flex-direction:column;gap:12px"></div>
+
+  <details class="card rules">
+    <summary><h2>The rules</h2></summary>
+    <div class="cardbody">
+      <p><b>Level up when all three are true:</b></p>
+      <ol>
+        <li>Every rep looks clean and controlled.</li>
+        <li>Top of the rep range on every set, with 2–3 reps left in the tank.</li>
+        <li>You felt fine by the next session.</li>
+      </ol>
+      <p>Within a level, add reps first. Change one thing at a time. Never train to failure.</p>
+      <p><b>Missed a session?</b> Skip it and do the next one. Never double up.</p>
+      <p><b>Rough day?</b> One set of each, or drop a level. Showing up counts.</p>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><h2>Dumbbell plate math</h2></summary>
+    <div class="cardbody">
+      <p style="margin:0">Load plates in pairs, one on each end. Weights below are plates only; add the bar.</p>
+      <table class="plates">
+        <tr><th>Per dumbbell</th><th>Plates on it</th><th>Pair possible?</th></tr>
+        <tr><td>10 lb</td><td>two 5s</td><td>Yes</td></tr>
+        <tr><td>20 lb</td><td>two 10s</td><td>Yes</td></tr>
+        <tr><td>30 lb</td><td>two 10s + two 5s</td><td>Yes</td></tr>
+        <tr><td>40 lb</td><td>four 10s</td><td>One only</td></tr>
+        <tr><td>50 lb</td><td>four 10s + two 5s</td><td>One only</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <p class="foot">Levels save on this phone. Tap a name to switch.</p>
+</div>
+
+<script>
+const KB20="20 lb kettlebell", KB56="56 lb kettlebell";
+const DAYS=[
+ {id:"squat",name:"Squat",dow:1,dayName:"Mon",slots:[
+  {k:"A",what:"Squat",dose:"3 × 6–10",lv:[
+   {n:"Box squat",cues:["Chair behind you, feet shoulder-width.","Sit back slowly to a light touch. No flopping.","Stand by driving through the whole foot."],q:"box squat to chair form"},
+   {n:"Bodyweight squat",load:"Slow: 3 seconds down",cues:["Feet shoulder-width, toes slightly out.","Count 3 on the way down. Knees track over toes.","Go only as deep as your back stays flat."],q:"bodyweight squat form"},
+   {n:"Goblet squat",load:KB20,cues:["Hold the bell by the horns against your chest.","Elbows slide inside the knees at the bottom.","Stand tall and squeeze glutes at the top."],q:"kettlebell goblet squat form"},
+   {n:"Goblet squat",load:"40 lb dumbbell (four 10s) + bar",cues:["Hold one end of the dumbbell at your chest.","3 seconds down, 1 second pause at the bottom.","Stand tall and squeeze glutes at the top."],q:"dumbbell goblet squat form"},
+   {n:"Goblet squat",load:KB56,cues:["Hold the bell by the horns against your chest.","Brace before each rep.","Elbows inside the knees at the bottom."],q:"heavy kettlebell goblet squat form"}]},
+  {k:"B",what:"Single leg",dose:"2 × 6–8 / leg",lv:[
+   {n:"Split squat",load:"Hand on the counter",cues:["Long stance, back heel up.","Drop the back knee straight down.","Counter is for balance only."],q:"split squat form beginner"},
+   {n:"Split squat",load:"No support",cues:["Long stance, back heel up.","Drop the back knee straight down.","Front heel stays planted."],q:"split squat form"},
+   {n:"Reverse lunge",cues:["Step back so both knees bend to about 90°.","Push through the front heel to return.","Torso tall the whole time."],q:"reverse lunge form"},
+   {n:"Split squat",load:"10 lb dumbbell in each hand + bar",cues:["Dumbbells hang at your sides.","Drop the back knee straight down.","Front leg does the work."],q:"dumbbell split squat form"},
+   {n:"Rear-foot-elevated split squat",load:"20 lb dumbbell in each hand + bar",cues:["Back foot laces-down on a bench or couch.","Front foot far enough that the knee stays over mid-foot.","Lower slowly. Front leg does the work."],q:"bulgarian split squat form"}]},
+  {k:"C",what:"Core",dose:"2 sets",lv:[
+   {n:"Dead bug",load:"6 per side",cues:["On your back, arms up, knees over hips.","Press your low back into the floor.","Slowly lower opposite arm and leg. Exhale."],q:"dead bug exercise form"},
+   {n:"Dead bug, long",load:"8 per side",cues:["Same set-up as dead bug.","Straighten the leg fully, arm reaches overhead.","Low back never lifts off the floor."],q:"dead bug exercise straight leg"},
+   {n:"Side plank on knees",load:"20–30 sec per side",cues:["Elbow under shoulder.","Straight line from knees to head.","Hips high, no sagging."],q:"side plank from knees form"},
+   {n:"Side plank",load:"20–30 sec per side",cues:["Elbow under shoulder, feet stacked.","Straight line from feet to head.","Hips high, no sagging."],q:"side plank form"},
+   {n:"Ab wheel rollout",load:"From knees, 5–8 reps",cues:["Brace like you're about to get poked in the stomach.","Roll out only as far as your back stays flat.","Pull back with your abs, not your hips."],q:"ab wheel rollout from knees form"}]}
+ ]},
+ {id:"hinge",name:"Hinge",dow:3,dayName:"Wed",slots:[
+  {k:"A",what:"Deadlift",dose:"3 × 6–10",lv:[
+   {n:"Wall hip hinge",cues:["Stand 6–8 inches from a wall, back to it.","Soft knees. Push your hips back to touch the wall.","Flat back. Hands slide down your thighs."],q:"wall hip hinge drill"},
+   {n:"Kettlebell deadlift",load:KB20+", raised on a step or books",cues:["Bell between your feet, high enough to reach with a flat back.","Hinge, grip, pull shoulders down and back.","Stand by pushing the floor away. Squeeze glutes."],q:"kettlebell deadlift form"},
+   {n:"Kettlebell deadlift",load:KB20+", from the floor",cues:["Bell between your feet.","Hinge, grip, pull shoulders down and back.","Stand by pushing the floor away. Squeeze glutes."],q:"kettlebell deadlift form"},
+   {n:"Dumbbell deadlift",load:"20 lb dumbbell in each hand + bar",cues:["Dumbbells beside your feet.","Hips back, flat back, chest proud.","3 seconds down. Don't let them drop."],q:"dumbbell deadlift form"},
+   {n:"Kettlebell deadlift",load:KB56,cues:["Bell between your feet.","Take the slack out before you pull.","Stand by pushing the floor away. Squeeze glutes."],q:"heavy kettlebell deadlift form"}]},
+  {k:"B",what:"Glutes + power",dose:"2 × 8–10",lv:[
+   {n:"Glute bridge",cues:["On your back, feet flat, hip-width apart.","Drive through your heels and lift hips to a straight line.","Squeeze glutes at the top. Don't arch your back."],q:"glute bridge form"},
+   {n:"Glute bridge",load:"3-second hold at the top",cues:["Same set-up as glute bridge.","Hold and squeeze for 3 seconds.","Lower slowly."],q:"glute bridge hold"},
+   {n:"Single-leg glute bridge",load:"8 per side",cues:["One foot planted, other leg straight up.","Drive through the planted heel.","Keep the hips level."],q:"single leg glute bridge form"},
+   {n:"Single-leg RDL",load:"Hand on the wall, 6–8 per side",cues:["Stand on one leg, slight knee bend.","Hips back as the free leg reaches behind you.","Keep your hips square to the floor."],q:"single leg romanian deadlift form"},
+   {n:"Kettlebell swing",load:KB20+", 10 reps",cues:["Hike the bell back between your legs like a football.","Snap your hips forward. The bell floats to chest height.","Arms are ropes. Power comes from the hips."],q:"kettlebell swing form beginner",note:"Unlock only once deadlift level 3 looks clean."}]},
+  {k:"C",what:"Suitcase carry",dose:"2 rounds / side",lv:[
+   {n:"Suitcase carry",load:KB20+", 30 sec",cues:["Weight in one hand at your side.","Stand tall. Don't lean away from it.","Walk slowly, shoulders level."],q:"suitcase carry form"},
+   {n:"Suitcase carry",load:KB20+", 45 sec",cues:["Weight in one hand at your side.","Stand tall. Don't lean away from it.","Walk slowly, shoulders level."],q:"suitcase carry form"},
+   {n:"Suitcase carry",load:"30 lb dumbbell + bar, 30–45 sec",cues:["Weight in one hand at your side.","Stand tall. Don't lean away from it.","Walk slowly, shoulders level."],q:"suitcase carry form"},
+   {n:"Suitcase carry",load:"40 lb dumbbell + bar, 30–45 sec",cues:["Weight in one hand at your side.","Stand tall. Don't lean away from it.","Walk slowly, shoulders level."],q:"suitcase carry form"},
+   {n:"Suitcase carry",load:KB56+", 30–45 sec",cues:["Weight in one hand at your side.","Stand tall. Don't lean away from it.","Walk slowly, shoulders level."],q:"suitcase carry form"}]}
+ ]},
+ {id:"push",name:"Push + Pull",dow:6,dayName:"Sat",slots:[
+  {k:"A",what:"Push",dose:"3 × 6–10",lv:[
+   {n:"Wall push-up",cues:["Hands on the wall at shoulder height.","Body straight from head to heels.","Chest to the wall, then press away."],q:"wall push up form"},
+   {n:"Incline push-up",load:"Hands on the kitchen counter",cues:["Hands just wider than shoulders.","Body stays a straight plank.","Chest to the counter edge."],q:"incline push up form"},
+   {n:"Incline push-up",load:"Hands on a bench or couch",cues:["Hands just wider than shoulders.","Body stays a straight plank.","Elbows at about 45°, not flared."],q:"incline push up form"},
+   {n:"Push-up",cues:["Hands just wider than shoulders.","Elbows at about 45°, not flared.","Chest to the floor. Body stays a plank."],q:"push up proper form"},
+   {n:"Feet-elevated push-up",load:"Feet on a step",cues:["Feet on a step, hands on the floor.","Body stays a plank.","Chest to the floor, elbows at 45°."],q:"decline push up form"}]},
+  {k:"B",what:"Pull",dose:"3 × 8–10",lv:[
+   {n:"Band row",cues:["Anchor the band at chest height.","Pull your elbows back past your ribs.","Squeeze shoulder blades, return slowly."],q:"resistance band row form"},
+   {n:"Band row",load:"2-second squeeze",cues:["Anchor the band at chest height.","Hold the squeeze for 2 seconds.","Return slowly."],q:"resistance band row form"},
+   {n:"One-arm row",load:KB20+", per arm",cues:["Hand and knee on a bench, back flat.","Pull the weight toward your hip.","No twisting. Lower slowly."],q:"one arm dumbbell row form"},
+   {n:"One-arm row",load:"30 lb dumbbell + bar, per arm",cues:["Hand and knee on a bench, back flat.","Pull toward your hip. Pause at the top.","No twisting. Lower slowly."],q:"one arm dumbbell row form"},
+   {n:"One-arm row",load:"40 lb dumbbell + bar, per arm",cues:["Hand and knee on a bench, back flat.","Pull toward your hip.","No twisting. Lower slowly."],q:"one arm dumbbell row form"}]},
+  {k:"C",what:"Press",dose:"2 × 8–10",lv:[
+   {n:"Band pull-apart",load:"12–15 reps",cues:["Arms straight out at shoulder height.","Pull the band apart to your chest.","Squeeze shoulder blades, return slowly."],q:"band pull apart form"},
+   {n:"Half-kneeling press",load:"10 lb dumbbell + bar, per arm",cues:["Kneel on the knee on the same side as the dumbbell.","Squeeze that glute. Ribs down.","Press straight up, bicep by your ear."],q:"half kneeling single arm dumbbell press"},
+   {n:"Half-kneeling press",load:"20 lb dumbbell + bar, per arm",cues:["Kneel on the knee on the same side as the dumbbell.","Squeeze that glute. Ribs down.","Press straight up, bicep by your ear."],q:"half kneeling single arm dumbbell press"},
+   {n:"Standing one-arm press",load:"20 lb dumbbell + bar, per arm",cues:["Feet hip-width, glutes squeezed.","Press up without leaning back.","Lower to the shoulder with control."],q:"standing single arm dumbbell press form"},
+   {n:"Standing one-arm press",load:"30 lb dumbbell + bar, per arm",cues:["Feet hip-width, glutes squeezed.","Press up without leaning back.","Lower to the shoulder with control."],q:"standing single arm dumbbell press form"}],
+   note:"If the arm can't go straight overhead without the lower back arching, stay half-kneeling."}
+ ]}
+];
+const WARMUP=[
+ ["March or jumping jacks","30 sec","march in place warm up"],
+ ["Arm circles","10 forward, 10 back","arm circles warm up"],
+ ["Cat-cow","6 slow","cat cow stretch"],
+ ["Leg swings","10 front-back, 10 side-side per leg","leg swings dynamic warm up"],
+ ["World's greatest stretch","3 per side","worlds greatest stretch"],
+ ["Ankle rocks","10 per side","knee to wall ankle mobility"],
+ ["Inchworm","4","inchworm exercise"]
+];
+const yt=q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+let person=load("person","rayne");
+let levels={rayne:load("lv-rayne",{}),perry:load("lv-perry",{})};
+const todayDow=new Date().getDay();
+function pickDay(){
+  const exact=DAYS.find(d=>d.dow===todayDow); if(exact) return exact.id;
+  for(let i=1;i<7;i++){const d=DAYS.find(x=>x.dow===(todayDow+i)%7); if(d) return d.id}
+  return DAYS[0].id;
+}
+let day=pickDay();
+
+document.getElementById("wu-list").innerHTML=WARMUP.map(([n,d,q])=>
+ `<li><a href="${yt(q)}" target="_blank" rel="noopener">${esc(n)}</a><span class="dose">${esc(d)}</span></li>`).join("");
+
+function renderWho(){
+  document.querySelectorAll(".who button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===person));
+}
+function renderDays(){
+  const nextId=pickDay();
+  document.getElementById("days").innerHTML=DAYS.map(d=>{
+    const tag=d.dow===todayDow?'<small class="today">Today</small>':(d.id===nextId?'<small class="today">Next up</small>':`<small>${d.dayName}</small>`);
+    return `<button role="tab" id="tab-${d.id}" aria-selected="${d.id===day}" data-d="${d.id}"><b>${d.name}</b>${tag}</button>`;
+  }).join("");
+}
+function lvOf(dayId,k){return levels[person][dayId+k]||1}
+function renderSlots(flashKey){
+  const d=DAYS.find(x=>x.id===day);
+  document.getElementById("slots").innerHTML=d.slots.map(s=>{
+    const L=lvOf(d.id,s.k), ex=s.lv[L-1], key=d.id+s.k;
+    const note=ex.note||s.note;
+    return `<section class="slot${flashKey===key?" flash":""}" aria-label="Slot ${s.k}">
+      <div class="slot-head"><div><span class="letter">${s.k}</span><span class="what">${esc(s.what)}</span></div><span class="dose-big">${esc(s.dose)}</span></div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="ex-row"><div class="ex-name">${esc(ex.n)}</div><a class="watch" href="${yt(ex.q)}" target="_blank" rel="noopener" aria-label="Watch how to do ${esc(ex.n)}">▶ Watch</a></div>
+        ${ex.load?`<div class="load">${esc(ex.load)}</div>`:""}
+      </div>
+      <div><div class="ladder">${[1,2,3,4,5].map(i=>`<span class="${i<=L?"on":""}"></span>`).join("")}</div>
+        <div class="ladder-label" style="margin-top:4px"><span>Level ${L} of 5</span>${L<5?`<span>Next: ${esc(s.lv[L].n)}</span>`:"<span>Top level</span>"}</div></div>
+      <ul class="cues">${ex.cues.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+      ${note?`<div class="note">${esc(note)}</div>`:""}
+      <div class="slot-actions">
+        <button class="btn" id="down-${key}" data-key="${key}" data-dir="-1" ${L<=1?"disabled":""} aria-label="Drop a level">−</button>
+        <button class="btn up" id="up-${key}" data-key="${key}" data-dir="1" ${L>=5?"disabled":""}>${L>=5?"Maxed out":"Level up"}</button>
+      </div>
+    </section>`;
+  }).join("");
+}
+function render(f){renderWho();renderDays();renderSlots(f)}
+
+document.querySelector(".who").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  person=b.dataset.p; save("person",person); render();
+});
+document.getElementById("days").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  day=b.dataset.d; render();
+});
+document.getElementById("slots").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-key]"); if(!b) return;
+  const key=b.dataset.key, cur=levels[person][key]||1;
+  const nv=Math.min(5,Math.max(1,cur+Number(b.dataset.dir)));
+  levels[person][key]=nv; save("lv-"+person,levels[person]); renderSlots(key);
+});
+
+let t=null,left=0;const tb=document.getElementById("timer");
+tb.addEventListener("click",()=>{
+  if(t){clearInterval(t);t=null;tb.classList.remove("running");tb.textContent="Rest 90 sec";return}
+  left=90;tb.classList.add("running");tb.textContent="Rest 1:30 · tap to stop";
+  t=setInterval(()=>{left--;
+    if(left<=0){clearInterval(t);t=null;tb.classList.remove("running");tb.textContent="Go! Next set";
+      try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}
+      setTimeout(()=>{if(!t)tb.textContent="Rest 90 sec"},4000);return}
+    tb.textContent=`Rest ${Math.floor(left/60)}:${String(left%60).padStart(2,"0")} · tap to stop`;
+  },1000);
+});
+render();
+</script>
+
+</body></html>
