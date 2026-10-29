@@ -1,4 +1,5 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <title>Rayne &amp; Perry Lift</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -83,6 +84,36 @@ a{color:var(--accent);font-weight:600}
 @keyframes flash{from{background:var(--accent-soft)}to{background:var(--surface)}}
 @media (prefers-reduced-motion:reduce){.flash{animation:none}}
 
+.sets{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sets .lab{font:600 .72rem/1 var(--body);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-right:2px}
+.setbox{display:flex;flex-direction:column;align-items:center;gap:3px}
+.setbox span{font:600 .65rem/1 var(--body);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.set{width:56px;height:48px;border-radius:10px;border:2px solid var(--line);background:transparent;color:var(--ink);font:700 1.35rem/1 var(--display);text-align:center;padding:0;-moz-appearance:textfield}
+.set::-webkit-outer-spin-button,.set::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.set::placeholder{color:var(--muted);opacity:.55}
+.set:focus{outline:3px solid var(--accent);outline-offset:1px}
+.set.filled{background:var(--good);border-color:var(--good);color:var(--surface)}
+.unit{font:500 .8rem/1 var(--mono);color:var(--muted);align-self:center;margin-top:12px}
+.last{font:500 .82rem/1.3 var(--mono);color:var(--ink);background:var(--bg);border-radius:8px;padding:8px 10px}
+.last b{font-family:var(--body);font-weight:600}
+.finish .err{color:var(--accent);font-weight:600}
+.finish{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:16px}
+.finish .big{border:0;border-radius:12px;padding:16px;background:var(--accent);color:var(--accent-ink);font:800 1.4rem/1 var(--display);text-transform:uppercase;letter-spacing:.03em}
+.finish.done{border-color:var(--good)}
+.finish .ok{font:800 1.4rem/1.1 var(--display);text-transform:uppercase;color:var(--good)}
+.finish small{color:var(--muted)}
+.linkbtn{border:0;background:none;padding:0;color:var(--accent);font-weight:600;text-decoration:underline;align-self:flex-start}
+.week{display:flex;gap:6px;align-items:center}
+.week i{width:14px;height:14px;border-radius:50%;border:2px solid var(--good)}
+.week i.on{background:var(--good)}
+.log{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.log li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);align-items:flex-start}
+.log li:first-child{border-top:0}
+.log .d{font:700 1.05rem/1.2 var(--display);text-transform:uppercase}
+.log .x{font-size:.85rem;color:var(--muted)}
+.log .del{border:0;background:none;color:var(--muted);font-size:.8rem;padding:4px;flex:none}
+.log .del.arm{color:var(--accent);font-weight:600}
+.empty{color:var(--muted);margin:0}
 .rules ol,.rules ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
 .rules p{margin:0}
 .plates{width:100%;border-collapse:collapse;font:500 .82rem/1.3 var(--mono)}
@@ -116,6 +147,15 @@ a{color:var(--accent);font-weight:600}
 
   <div id="slots" style="display:flex;flex-direction:column;gap:12px"></div>
 
+  <div class="finish" id="finish" aria-live="polite"></div>
+
+  <details class="card" id="logcard">
+    <summary><h2 id="logtitle">Log</h2><span class="week" id="weekdots" aria-hidden="true"></span></summary>
+    <div class="cardbody">
+      <ul class="log" id="loglist"></ul>
+    </div>
+  </details>
+
   <details class="card rules">
     <summary><h2>The rules</h2></summary>
     <div class="cardbody">
@@ -146,7 +186,7 @@ a{color:var(--accent);font-weight:600}
     </div>
   </details>
 
-  <p class="foot">Levels save on this phone. Tap a name to switch.</p>
+  <p class="foot">Levels and log save on this phone. Tap a name to switch.</p>
 </div>
 
 <script>
@@ -231,6 +271,19 @@ function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
 let person=load("person","rayne");
 let levels={rayne:load("lv-rayne",{}),perry:load("lv-perry",{})};
+let logs={rayne:load("log-rayne",[]),perry:load("log-perry",[])};
+const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const TODAY=ymd(new Date());
+let ticks=load("ticks",{}); if(ticks.date!==TODAY) ticks={date:TODAY};
+for(const k in ticks){if(Array.isArray(ticks[k]))ticks[k]=ticks[k].map(v=>/^\d+$/.test(String(v))?String(v):"")}
+const setCount=s=>parseInt(s.dose,10)||2;
+const unitOf=ex=>/sec/.test(ex.load||"")?"sec":"reps";
+const repsOf=k=>(ticks[person+k]||[]).map(v=>parseInt(v,10)).filter(n=>n>0);
+function lastFor(dayId,k,L){
+  for(const e of logs[person]){ if(e.date===TODAY||e.day!==dayId||!e.ex||!e.ex[k]) continue;
+    return e.ex[k].lv===L?{e,x:e.ex[k]}:{e,x:e.ex[k],other:true}; }
+  return null;
+}
 const todayDow=new Date().getDay();
 function pickDay(){
   const exact=DAYS.find(d=>d.dow===todayDow); if(exact) return exact.id;
@@ -268,6 +321,12 @@ function renderSlots(flashKey){
         <div class="ladder-label" style="margin-top:4px"><span>Level ${L} of 5</span>${L<5?`<span>Next: ${esc(s.lv[L].n)}</span>`:"<span>Top level</span>"}</div></div>
       <ul class="cues">${ex.cues.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
       ${note?`<div class="note">${esc(note)}</div>`:""}
+      ${(()=>{const lt=lastFor(d.id,s.k,L), u=unitOf(ex);
+        if(!lt) return `<div class="last">First time at this level. Start at the low end of ${esc(s.dose.split("×")[1]||"the range").trim()}.</div>`;
+        if(lt.other) return `<div class="last">${lt.x.lv<L?"New level! Start at the low end of the range.":"Dropped a level. Aim for the top of the range."}</div>`;
+        return `<div class="last"><b>Last time</b> (${esc(fmt(lt.e.date))}): ${lt.x.reps.join(" · ")} ${u}</div>`})()}
+      <div class="sets" role="group" aria-label="Reps per set">${Array.from({length:setCount(s)},(_,i)=>{const v=(ticks[person+key]||[])[i]||"";const lt=lastFor(d.id,s.k,L);const ph=lt&&!lt.other&&lt.x.reps[i]?lt.x.reps[i]:"–";
+        return `<label class="setbox"><span>Set ${i+1}</span><input class="set${v?" filled":""}" id="set-${key}-${i}" type="number" inputmode="numeric" min="0" max="300" data-set="${key}" data-i="${i}" value="${esc(v)}" placeholder="${ph}" aria-label="Set ${i+1} ${unitOf(ex)}"></label>`}).join("")}<span class="unit">${unitOf(ex)}${/per (side|leg|arm)|\/ (side|leg)/.test(s.dose+(ex.load||""))?" / side":""}</span></div>
       <div class="slot-actions">
         <button class="btn" id="down-${key}" data-key="${key}" data-dir="-1" ${L<=1?"disabled":""} aria-label="Drop a level">−</button>
         <button class="btn up" id="up-${key}" data-key="${key}" data-dir="1" ${L>=5?"disabled":""}>${L>=5?"Maxed out":"Level up"}</button>
@@ -275,8 +334,44 @@ function renderSlots(flashKey){
     </section>`;
   }).join("");
 }
-function render(f){renderWho();renderDays();renderSlots(f)}
-
+function monday(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7));return ymd(d)}
+function fmt(ds){const [y,m,dd]=ds.split("-").map(Number);return new Date(y,m-1,dd).toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})}
+function entryText(e,sep=" · "){const d=DAYS.find(x=>x.id===e.day);
+  if(!e.ex) return d.slots.map(s=>`${s.k}${e.lv[s.k]} ${s.lv[e.lv[s.k]-1].n}`).join(sep);
+  return d.slots.filter(s=>e.ex[s.k]).map(s=>{const x=e.ex[s.k],ex=s.lv[x.lv-1];return `${ex.n} (L${x.lv}): ${x.reps.join("/")} ${unitOf(ex)}`}).join(sep)}
+function todaysEntry(){return logs[person].find(e=>e.date===TODAY&&e.day===day)}
+function renderFinish(){
+  const d=DAYS.find(x=>x.id===day), el=document.getElementById("finish"), e=todaysEntry();
+  if(e){el.className="finish done";el.innerHTML=`<div class="ok">✓ ${esc(d.name)} done today</div><small>${esc(entryText(e,"  ·  "))}</small><button class="linkbtn" id="undo">Undo</button>`;return}
+  el.className="finish";el.innerHTML=`<button class="big" id="done">Finish ${esc(d.name)} workout</button><small id="finmsg">Logs the reps you entered. Exercises with no reps are left out.</small>`;
+}
+let armed=null;
+function renderLog(){
+  const L=logs[person], wk=monday(), n=L.filter(e=>e.date>=wk).length;
+  document.getElementById("logtitle").textContent=`Log · ${Math.min(n,99)} of 3 this week`;
+  document.getElementById("weekdots").innerHTML=[0,1,2].map(i=>`<i class="${i<n?"on":""}"></i>`).join("");
+  const list=document.getElementById("loglist");
+  if(!L.length){list.innerHTML='<li><p class="empty">No workouts yet. Tap Finish when you\'re done and it shows up here.</p></li>';return}
+  list.innerHTML=L.slice(0,30).map(e=>{const d=DAYS.find(x=>x.id===e.day);
+    return `<li><div><div class="d">${esc(fmt(e.date))} · ${esc(d.name)}</div><div class="x">${esc(entryText(e))}</div></div><button class="del${armed===e.id?" arm":""}" id="del-${e.id}" data-del="${e.id}">${armed===e.id?"Tap to delete":"Remove"}</button></li>`}).join("");
+}
+function render(f){renderWho();renderDays();renderSlots(f);renderFinish();renderLog()}
+function saveLog(){logs[person].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);save("log-"+person,logs[person])}
+document.getElementById("finish").addEventListener("click",e=>{
+  const d=DAYS.find(x=>x.id===day);
+  if(e.target.id==="done"){
+    const ex={};d.slots.forEach(s=>{const r=repsOf(d.id+s.k);if(r.length) ex[s.k]={lv:lvOf(d.id,s.k),reps:r}});
+    if(!Object.keys(ex).length){const m=document.getElementById("finmsg");m.className="err";m.textContent="Enter reps for at least one set first.";return}
+    logs[person].push({id:Date.now(),date:TODAY,day:d.id,ex});saveLog();renderFinish();renderLog();
+  }else if(e.target.id==="undo"){
+    const t=todaysEntry();logs[person]=logs[person].filter(x=>x!==t);saveLog();renderFinish();renderLog();
+  }
+});
+document.getElementById("loglist").addEventListener("click",e=>{
+  const b=e.target.closest("[data-del]");if(!b)return;const id=Number(b.dataset.del);
+  if(armed===id){logs[person]=logs[person].filter(x=>x.id!==id);armed=null;saveLog();renderFinish()}else{armed=id;setTimeout(()=>{if(armed===id){armed=null;renderLog()}},4000)}
+  renderLog();
+});
 document.querySelector(".who").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
   person=b.dataset.p; save("person",person); render();
@@ -292,6 +387,11 @@ document.getElementById("slots").addEventListener("click",e=>{
   levels[person][key]=nv; save("lv-"+person,levels[person]); renderSlots(key);
 });
 
+document.getElementById("slots").addEventListener("input",e=>{
+  const st=e.target.closest("input[data-set]");if(!st)return;
+  const k=person+st.dataset.set,i=Number(st.dataset.i);const a=ticks[k]||[];a[i]=st.value.slice(0,3);ticks[k]=a;save("ticks",ticks);
+  st.classList.toggle("filled",parseInt(st.value,10)>0);
+});
 let t=null,left=0;const tb=document.getElementById("timer");
 tb.addEventListener("click",()=>{
   if(t){clearInterval(t);t=null;tb.classList.remove("running");tb.textContent="Rest 90 sec";return}
